@@ -16,6 +16,7 @@ wp-content/themes/twenty*/
 
 # ignore node dependency directories
 node_modules/
+lib/
 
 # ignore log files and databases
 *.log
