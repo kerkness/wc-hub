@@ -17,6 +17,7 @@
  * Domain Path: /languages
  */
 
+
 //  Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -24,6 +25,9 @@ defined('ABSPATH') || exit;
 if (!class_exists('WooHub\WooHub')) {
     require_once( __DIR__ . '/lib/autoload.php');
 }
+
+use WooHub\WooHub;
+
 
 /**
  * Gets this plugin's absolute directory path.
@@ -63,7 +67,7 @@ function _hublog( $log )
 /**
  * Initalize the plugin
  */
-\WooHub\WooHub::init();
+WooHub::init();
 
 /**
  * Create or update a HubSpot contact from WP_User object
