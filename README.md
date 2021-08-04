@@ -16,6 +16,14 @@ Woocommerce/Wordpress users will automatically be pushed to HubSpot when a user 
 
 To manually update a Hubspot Contact use the function `woohub_create_or_update_hubspot_contact($user)`
 
+*Example*
+
+```
+$current_user = wp_get_current_user();
+
+woohub_create_or_update_hubspot_contact($current_user);
+```
+
 ### Actions
 
 To access the HubSpot contact ID or informed when the contact has been updated use the action hook `woohub_hubspot_contact_updated`
