@@ -1,14 +1,6 @@
 # woohub
 Basic WooCommerce & HubSpot intergration
 
-### Usage
-
-*Automatic Updates*
-Woocommerce/Wordpress users will automatically be pushed to HubSpot when a user registers, logs in or updates their account or billing address.
-
-*Manual Updates*
-To manually update a Hubspot Contact use the function `woohub_create_or_update_hubspot_contact($user)`
-
 ### Dependencies
 
 Plugin has some composer dependencies.  
@@ -17,6 +9,12 @@ If installing from git or composer run `composer install` before activating
 ### Setup
 
 Add your HubSpot API Key in `Settings > WooHub` 
+
+### Usage
+
+Woocommerce/Wordpress users will automatically be pushed to HubSpot when a user **registers, logs in or updates** their account or billing address.
+
+To manually update a Hubspot Contact use the function `woohub_create_or_update_hubspot_contact($user)`
 
 ### Actions
 
