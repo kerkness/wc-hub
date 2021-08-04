@@ -80,3 +80,6 @@ function _hublog( $log )
 
 \WooHub\WooHub::init();
 
+function woohub_create_or_update_hubspot_contact ( WP_User $user ) {
+    \WooHub\WooHub::createOrUpdateHubspot( $user );
+}

@@ -25,6 +25,8 @@ class WooHub
 
         // Admin Page
         WooHubOptions::init();
+
+        return $instance;
     }
 
     /**
@@ -34,7 +36,7 @@ class WooHub
     {
         $user = get_user_by('ID', $user_id);
 
-        $result = $this->createOrUpdateHubspot($user);
+        $result = $this->createOrUpdate($user);
     }
 
     /**
@@ -42,14 +44,14 @@ class WooHub
      */
     public function wp_login_action($user_login, WP_User $user)
     {
-        $result = $this->createOrUpdateHubspot($user);
+        $result = $this->createOrUpdate($user);
     }
 
     public function action_woocommerce_save_account_details($user_id)
     {
         $user = get_user_by('ID', $user_id);
 
-        $result = $this->createOrUpdateHubspot($user);
+        $result = $this->createOrUpdate($user);
     }
 
     public function action_woocommerce_customer_save_address($user_id, $load_address)
@@ -58,13 +60,17 @@ class WooHub
 
         $user = get_user_by('ID', $user_id);
 
-        $result = $this->createOrUpdateHubspot($user);
+        $result = $this->createOrUpdate($user);
+    }
+
+    public function createOrUpdate(WP_User $user) {
+        WooHub::createOrUpdateHubspot($user);
     }
 
     /**
      * Create or Update Hubspot User
      */
-    public function createOrUpdateHubspot(WP_User $user)
+    public static function createOrUpdateHubspot(WP_User $user)
     {
         $hub = Hub::create(get_option('woohub_hubspot_api_key'));
 
@@ -81,31 +87,31 @@ class WooHub
             ],
             [
                 'property' => 'company',
-                'value' => $this->meta_value('billing_company', $meta)
+                'value' => WooHub::meta_value('billing_company', $meta)
             ],
             [
                 'property' => 'phone',
-                'value' => $this->meta_value('billing_phone', $meta)
+                'value' => WooHub::meta_value('billing_phone', $meta)
             ],
             [
                 'property' => 'address',
-                'value' => $this->meta_value('billing_address_1', $meta)
+                'value' => WooHub::meta_value('billing_address_1', $meta)
             ],
             [
                 'property' => 'city',
-                'value' => $this->meta_value('billing_city', $meta)
+                'value' => WooHub::meta_value('billing_city', $meta)
             ],
             [
                 'property' => 'state',
-                'value' => $this->meta_value('billing_state', $meta)
+                'value' => WooHub::meta_value('billing_state', $meta)
             ],
             [
                 'property' => 'zip',
-                'value' => $this->meta_value('billing_postcode', $meta)
+                'value' => WooHub::meta_value('billing_postcode', $meta)
             ],
             [
                 'property' => 'country',
-                'value' => $this->meta_value('billing_country', $meta)
+                'value' => WooHub::meta_value('billing_country', $meta)
             ],
 
         ];
@@ -115,11 +121,16 @@ class WooHub
 
         $response = $hub->contacts()->createOrUpdate($user->user_email, $properties);
 
+        if ($response->data && $response->data->vid) {
+            do_action('woohub_hubspot_contact_updated', $response->data->vid, $user);
+            
+            return $response->data->vid;
+        }
 
-        return ($response->data && $response->data->vid) ? $response->data->vid : false;
+        return false;
     }
 
-    public function meta_value($key, $meta)
+    public static function meta_value($key, $meta)
     {
         return $meta[$key] && $meta[$key][0] ? $meta[$key][0] : '';
     }

@@ -3,7 +3,11 @@ Basic WooCommerce & HubSpot intergration
 
 ### Usage
 
+*Automatic Updates*
 Woocommerce/Wordpress users will automatically be pushed to HubSpot when a user registers, logs in or updates their account or billing address.
+
+*Manual Updates*
+To manually update a Hubspot Contact use the function `woohub_create_or_update_hubspot_contact($user)`
 
 ### Dependencies
 
@@ -14,7 +18,24 @@ If installing from git or composer run `composer install` before activating
 
 Add your HubSpot API Key in `Settings > WooHub` 
 
-### Hooks
+### Actions
+
+To access the HubSpot contact ID or informed when the contact has been updated use the action hook `woohub_hubspot_contact_updated`
+
+*Example*
+
+```
+add_action('woohub_hubspot_contact_updated', 'handle_woohub_hubspot_contact_updated', 10, 2);
+
+function handle_woohub_hubspot_contact_updated( $hubspot_id, $user ) {
+    
+    //...
+
+}
+
+```
+
+### Filters
 
 To modify what HubSpot Contact Properties are updates use the `woohub_hubspot_contact_properties` filter.
 
@@ -35,3 +56,4 @@ function handle_hubspot_contact_props_filter( $properties, $user ) {
 
 add_filter( 'woohub_hubspot_contact_properties', 'handle_hubspot_contact_props_filter', 10, 2 );
 ```
+
