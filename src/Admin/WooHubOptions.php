@@ -2,8 +2,15 @@
 
 namespace WooHub\Admin;
 
+/**
+ * WooHub Admin Options
+ * Create admin page and handle option updates
+ */
 class WooHubOptions
 {
+    /**
+     * Initalize the plugin
+     */
     public static function init()
     {
         $instance = new WooHubOptions();
@@ -13,6 +20,9 @@ class WooHubOptions
 
     }
 
+    /**
+     * Register Wordpress Options
+     */
     public function woohub_register_settings()
     {
         register_setting(
@@ -26,11 +36,17 @@ class WooHubOptions
         );
     }
 
+    /**
+     * Add Options Page to Dashboard
+     */
     public function woohub_admin_settings_menu()
     {
         add_options_page('WooHub', 'WooHub', 'manage_options', 'woohub-options-page', [$this, 'woohub_options_page']);
     }
 
+    /**
+     * Render Options Page
+     */
     public function woohub_options_page()
     {
 ?>

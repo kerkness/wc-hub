@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name: Woohub
  * Description: WooCommerce & HubSpot Integration
- * Version:     1.0.0
+ * Version:     0.1.0
  * Author:      Ryan Mayberry (@kerkness)
  * Author URI:  https://kerkness.ca
  * Text Domain: woohub
@@ -20,25 +20,14 @@
 //  Exit if accessed directly.
 defined('ABSPATH') || exit;
 
-// autoload our composer installed dependencies.
-// require __DIR__ . '/lib/autoload.php';
-
-// If we haven't loaded this plugin from Composer we need to add our own autoloader
+// Include autoloader if plugin isn't running as a dependency
 if (!class_exists('WooHub\WooHub')) {
-    // Get a reference to our PSR-4 Autoloader function that we can use to add our
-    // Acme namespace
     require_once( __DIR__ . '/lib/autoload.php');
-
 }
 
 /**
  * Gets this plugin's absolute directory path.
  *
- * @since  1.0.0
- * @ignore
- * @access private
- *
- * @return string
  */
 function _get_woohub_plugin_directory() {
 	return __DIR__;
@@ -46,14 +35,7 @@ function _get_woohub_plugin_directory() {
 
 /**
  * Gets this plugin's URL.
- *
- * @since  1.0.0
- * @ignore
- * @access private
- *
- * @return string
  */
-
 function _get_woohub_plugin_url() {
 	static $plugin_url;
 
@@ -65,8 +47,9 @@ function _get_woohub_plugin_url() {
 }
 
 /**
- * Development debug log. remove from prod
- * 
+ * Debug method. Writes to plugin log file.
+ * Do not use in production
+ *
  */
 function _hublog( $log )
 {
@@ -77,9 +60,14 @@ function _hublog( $log )
     error_log($log . "\n", 3, _get_woohub_plugin_directory().'/debug.log');
 }
 
-
+/**
+ * Initalize the plugin
+ */
 \WooHub\WooHub::init();
 
+/**
+ * Create or update a HubSpot contact from WP_User object
+ */
 function woohub_create_or_update_hubspot_contact ( WP_User $user ) {
     \WooHub\WooHub::createOrUpdateHubspot( $user );
 }
