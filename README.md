@@ -1,5 +1,9 @@
 # woohub
-WooCommerce HubSpot intergration
+Basic WooCommerce & HubSpot intergration
+
+### Usage
+
+Woocommerce/Wordpress users will automatically be pushed to HubSpot when a user registers, logs in or updates their account or billing address.
 
 ### Dependencies
 
@@ -9,10 +13,6 @@ If installing from git or composer run `composer install` before activating
 ### Setup
 
 Add your HubSpot API Key in `Settings > WooHub` 
-
-### Usage
-
-Contacts will be pushed to HubSpot when a user registers, logs in or updates their account or billing address.
 
 ### Hooks
 
