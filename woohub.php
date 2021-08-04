@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name: Woohub
  * Description: WooCommerce & HubSpot Integration
- * Version:     0.1.3
+ * Version:     0.1
  * Author:      Ryan Mayberry (@kerkness)
  * Author URI:  https://kerkness.ca
  * Text Domain: woohub
@@ -73,5 +73,5 @@ WooHub::init();
  * Create or update a HubSpot contact from WP_User object
  */
 function woohub_create_or_update_hubspot_contact ( WP_User $user ) {
-    \WooHub\WooHub::createOrUpdateHubspot( $user );
+    WooHub::createOrUpdateHubspot( $user );
 }
