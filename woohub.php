@@ -29,8 +29,6 @@ if (!class_exists('WooHub\WooHub')) {
     // Acme namespace
     require_once( __DIR__ . '/lib/autoload.php');
 
-    // Use the autoload function to setup our class mapping
-    //$autoloader('WooHub\\', __DIR__ . '/src/WooHub/');
 }
 
 /**
@@ -68,6 +66,7 @@ function _get_woohub_plugin_url() {
 
 /**
  * Development debug log. remove from prod
+ * 
  */
 function _hublog( $log )
 {
@@ -79,29 +78,5 @@ function _hublog( $log )
 }
 
 
-
 \WooHub\WooHub::init();
 
-// require_once __DIR__ . '/src/classes/mfa-rest.php';
-// require_once __DIR__ . '/src/classes/mfa-products.php';
-// require_once __DIR__ . '/src/classes/mfa-react.php';
-// require_once __DIR__ . '/src/classes/mfa-wp-dashboard.php';
-
-// $mfa_rest = new MFA_Rest();
-// $mfa_products = new MFA_Products();
-// $mfa_react = new MFA_React();
-// $mfa_dashboard = new MFA_WP_Dashboard();
-
-
-// /**
-//  * Needed to whitelist custom wp-artwork endpoints
-//  */
-// add_filter('jwt_auth_whitelist', function ($endpoints) {
-//     return array(
-//         '/wp-json/wp-mfa/v1/cart-count',
-//         '/wp-json/wp-artwork/v1/existing-id',
-//         '/wp-json/wp-artwork/v1/collection-creations',
-//         '/wp-json/wp-artwork/v1/media/sideload',
-//         '/wp-json/wp-hubspot-props/*',
-//     );
-// });
