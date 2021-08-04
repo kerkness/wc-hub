@@ -66,6 +66,19 @@ function _get_woohub_plugin_url() {
 	return $plugin_url;
 }
 
+/**
+ * Development debug log. remove from prod
+ */
+function _hublog( $log )
+{
+    if (is_array($log) || is_object($log)) {
+	    $log =	print_r($log, true);
+	} 
+
+    error_log($log . "\n", 3, _get_woohub_plugin_directory().'/debug.log');
+}
+
+
 
 \WooHub\WooHub::init();
 
