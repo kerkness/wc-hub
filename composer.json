@@ -15,9 +15,7 @@
     "require": {
       "php": ">=7.1.0",
       "composer/installers": "v1.0.6",
-      "hubspot/hubspot-php": "^3.1",
-      "tightenco/collect": "^7.12",
-      "symfony/var-dumper": "^5.1"
+      "hubspot/hubspot-php": "^3.1"
     },
     "autoload"    : {
       "psr-4" : {
