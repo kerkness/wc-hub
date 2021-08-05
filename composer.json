@@ -3,7 +3,7 @@
     "description": "Integrates WooCommerce and Hubspot.",
     "keywords": ["wordpress", "plugin", "woocommerce", "hubspot"],
     "homepage": "https://kerkness.ca",
-    "license": "MIT",
+    "license": "GNU",
     "authors": [
       {
         "name": "kerkness",

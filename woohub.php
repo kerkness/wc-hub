@@ -5,7 +5,7 @@
  *
  * @package     Woohub
  * @author      Ryan Mayberry (@kerkness)
- * @license     MIT
+ * @license     GNU
  *
  * @wordpress-plugin
  * Plugin Name: Woohub
