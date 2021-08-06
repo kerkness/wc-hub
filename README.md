@@ -43,7 +43,7 @@ function handle_woohub_hubspot_contact_updated( $hubspot_id, $user ) {
 
 ### Filters
 
-To modify what HubSpot Contact Properties are updates use the `woohub_hubspot_contact_properties` filter.
+To modify what HubSpot Contact Properties are updated use the `woohub_hubspot_contact_properties` filter.
 
 *Example*
 
@@ -63,3 +63,18 @@ function handle_hubspot_contact_props_filter( $properties, $user ) {
 add_filter( 'woohub_hubspot_contact_properties', 'handle_hubspot_contact_props_filter', 10, 2 );
 ```
 
+Modify what HubSpot Contact Properties are returned use the `woohub_hubspot_get_contact_parameters` filter.
+See https://developers.hubspot.com/docs/methods/contacts/get_contact_by_email  for more details.
+
+*Example*
+
+```
+function handle_woohub_hubspot_get_contact_parameters( $parameters ) {
+
+    $parameters = ['showListMemberships' => 1, 'property' => 'lastname'];
+
+    return $parameters;
+}
+
+add_filter( 'woohub_hubspot_get_contact_parameters', 'handle_woohub_hubspot_get_contact_parameters', 10, 1 );
+```

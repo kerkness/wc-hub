@@ -75,3 +75,36 @@ WooHub::init();
 function woohub_create_or_update_hubspot_contact ( WP_User $user ) {
     WooHub::createOrUpdateHubspot( $user );
 }
+
+/**
+ * Update specific values for a hubspot contact
+ */
+function woohub_update_hubspot_contact( $email, $properties = []) {
+	return WooHub::updateHubSpotContact($email, $properties);
+}
+
+/**
+ * Adds a user to a specfic contact list
+ */
+function woohub_add_to_contact_list( $email, $contact_list_id ) {}
+
+/**
+ * Remove a user from a specific contact list
+ * Applies filter woohub_hubspot_get_contact_parameters
+ */
+function woohub_remove_from_contact_list( $email, $contact_list_id ) {}
+
+/**
+ * Get the current user's hubspot profile
+ */
+function woohub_get_current_contact() {
+	return woohub_get_hubspot_contact(wp_get_current_user());
+}
+
+/**
+ * Get a specific user's hubspot profile
+ * Applies filter woohub_hubspot_get_contact_parameters
+ */
+function woohub_get_hubspot_contact( WP_User $user ) {
+	return WooHub::getHubSpotContact($user);
+}

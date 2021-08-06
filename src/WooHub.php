@@ -152,6 +152,43 @@ class WooHub
     }
 
     /**
+     * Get HubSpot contact for current user
+     * Uses a filter to tweak what parameters are fetched on a contact
+     *  @see https://developers.hubspot.com/docs/methods/contacts/get_contact_by_email
+     */
+    public static function getHubSpotContact(WP_User $user)
+    {
+        if (!$user) return false;
+
+        // Create HubSpot Client
+        $hub = Hub::create(get_option('woohub_hubspot_api_key'));
+
+        $default_params = ['showListMemberships'];
+
+        $parameters = apply_filters( 'woohub_hubspot_get_contact_parameters', $default_params );
+
+        $response = $hub->contacts()->getByEmail($user->user_email, $parameters);
+
+        return $response;
+    }
+
+    /**
+     * Update HubSpot contact with specific properties
+     * @see https://legacydocs.hubspot.com/docs/methods/contacts/update_contact-by-email
+     */
+    public static function updateHubSpotContact($email, $properties)
+    {
+        // Create HubSpot Client
+        $hub = Hub::create(get_option('woohub_hubspot_api_key'));
+
+        // return $properties;
+
+        $response = $hub->contacts()->updateByEmail($email, $properties);
+
+        return $response;
+    }
+
+    /**
      * Helper function for pulling meta value from wp get_user_meta() function
      */
     public static function meta_value($key, $meta)
