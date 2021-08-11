@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name: Woohub
  * Description: WooCommerce & HubSpot Integration
- * Version:     0.1
+ * Version:     0.1.6
  * Author:      Ryan Mayberry (@kerkness)
  * Author URI:  https://kerkness.ca
  * Text Domain: woohub
