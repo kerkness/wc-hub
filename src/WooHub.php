@@ -2,8 +2,8 @@
 
 namespace WooHub;
 
-use WooHub\Admin\WooHubOptions;
 use WP_User;
+use WooHub\Admin\WooHubOptions;
 use SevenShores\Hubspot\Factory as Hub;
 
 /**
@@ -41,7 +41,7 @@ class WooHub
     {
         $user = get_user_by('ID', $user_id);
 
-        $result = $this->createOrUpdate($user);
+        return $this->createOrUpdate($user);
     }
 
     /**
@@ -49,7 +49,7 @@ class WooHub
      */
     public function wp_login_action($user_login, WP_User $user)
     {
-        $result = $this->createOrUpdate($user);
+        return $this->createOrUpdate($user);
     }
 
     /**
@@ -59,7 +59,7 @@ class WooHub
     {
         $user = get_user_by('ID', $user_id);
 
-        $result = $this->createOrUpdate($user);
+        return $this->createOrUpdate($user);
     }
 
     /**
@@ -71,14 +71,14 @@ class WooHub
 
         $user = get_user_by('ID', $user_id);
 
-        $result = $this->createOrUpdate($user);
+        return $this->createOrUpdate($user);
     }
 
     /**
      * Class method to Create or Update Hubspot User
      */
     public function createOrUpdate(WP_User $user) {
-        WooHub::createOrUpdateHubspot($user);
+        return WooHub::createOrUpdateHubspot($user);
     }
 
     /**
