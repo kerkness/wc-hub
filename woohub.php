@@ -12,7 +12,7 @@
  * Plugin URI:  https://kerkness.ca/woohub
  * Description: WooCommerce & HubSpot Integration
  * Version:     1.0.0
- * Author:      Ryan Mayberry (@kerkness)
+ * Author:      Kerkness
  * Author URI:  https://kerkness.ca
  * Text Domain: woohub
  * Domain Path: /languages
