@@ -18,9 +18,9 @@ class WooHub
     public static function init()
     {
         // If a hubspot api key has been added then register actions
-        if (get_option('woohub_hubspot_api_key')) {
-            $instance = new WooHub();
+        $instance = get_option('woohub_hubspot_api_key') ? new WooHub() : null;
 
+        if ($instance) {
             add_action('user_register', [$instance, 'user_register_action'], 10, 1);
             add_action('wp_login', [$instance, 'wp_login_action'], 10, 2);
             add_action('woocommerce_after_edit_account_form', [$instance, 'disable_edit_email_address']);
@@ -29,7 +29,6 @@ class WooHub
             add_action('woocommerce_customer_save_address', [$instance, 'action_woocommerce_customer_save_address'], 10, 2);
         }
 
-        // Initialize Admin Page
         WooHubOptions::init();
 
         return $instance;
