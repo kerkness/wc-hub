@@ -184,6 +184,9 @@ class WooHub
 
         $response = $hub->contacts()->updateByEmail($email, $properties);
 
+        $user = get_user_by( 'email', $email );
+        do_action('woohub_hubspot_contact_updated', '', $user);
+
         return $response;
     }
 
