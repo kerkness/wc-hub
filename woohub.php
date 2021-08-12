@@ -4,20 +4,21 @@
  * Main plugin file.
  *
  * @package     Woohub
- * @author      Ryan Mayberry (@kerkness)
+ * @author      Kerkness
  * @license     GNU
  *
  * @wordpress-plugin
  * Plugin Name: Woohub
  * Plugin URI:  https://kerkness.ca/woohub
- * Description: WooCommerce & HubSpot Integration
+ * Description: WooCommerce & HubSpot Integration.
  * Version:     1.0.0
+ * Requires at least: 5.4
+ * Tested up to: 5.8
+ * Requires PHP: 7.2
  * Author:      Kerkness
  * Author URI:  https://kerkness.ca
  * Text Domain: woohub
  * Domain Path: /languages
- * Requires at least: 5.4
- * Tested up to: 5.8
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html 
  */

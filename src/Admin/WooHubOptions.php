@@ -16,10 +16,29 @@ class WooHubOptions
     {
         $instance = new WooHubOptions();
 
+        register_activation_hook( _get_woohub_basename(), [$instance, 'woohub_activation_hook'] );
+
         add_action('init', [$instance, 'woohub_register_settings'], 10, 0);
         add_action('admin_menu', [$instance, 'woohub_admin_settings_menu'], 10, 0);
         add_filter('plugin_action_links_' . _get_woohub_basename(), [$instance, 'woohub_settings_link'], 10, 1);
         add_filter('plugin_row_meta', [$instance, 'plugin_row_meta'], 10, 2);
+    }
+
+    /**
+     * Plugin Activation Hook
+     */
+    public function woohub_activation_hook()
+    {
+        register_uninstall_hook(_get_woohub_basename(), 'woohub_deactivation_hook' );
+    }
+
+    /**
+     * Plugin deactivation hook
+     */
+    public function woohub_deactivation_hook()
+    {
+        delete_option( 'woohub_hubspot_api_key' );
+        delete_site_option('woohub_hubspot_api_key');
     }
 
     /**

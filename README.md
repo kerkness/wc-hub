@@ -14,7 +14,7 @@ Add your HubSpot API Key in `Settings > WooHub`
 
 Woocommerce/Wordpress users will automatically be pushed to HubSpot when a user **registers, logs in or updates** their account or billing address.
 
-To manually update a Hubspot Contact use the function `woohub_create_or_update_hubspot_contact($user)`
+To manually update a Hubspot Contact use the function `woohub_update_hubspot_contact($email, $properties)`
 
 *Example*
 
