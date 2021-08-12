@@ -4,17 +4,24 @@
  * Main plugin file.
  *
  * @package     Woohub
- * @author      Ryan Mayberry (@kerkness)
+ * @author      Kerkness
  * @license     GNU
  *
  * @wordpress-plugin
  * Plugin Name: Woohub
- * Description: WooCommerce & HubSpot Integration
- * Version:     0.1.6
- * Author:      Ryan Mayberry (@kerkness)
+ * Plugin URI:  https://kerkness.ca/woohub
+ * Description: WooCommerce & HubSpot Integration.
+ * Version:     1.0.0
+ * Requires at least: 5.4
+ * Tested up to: 5.8
+ * Requires PHP: 7.2
+ * Author:      Kerkness
+
  * Author URI:  https://kerkness.ca
  * Text Domain: woohub
  * Domain Path: /languages
+ * License: GPL2+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html 
  */
 
 
@@ -28,40 +35,38 @@ if (!class_exists('WooHub\WooHub')) {
 
 use WooHub\WooHub;
 
-
 /**
  * Gets this plugin's absolute directory path.
  *
  */
-function _get_woohub_plugin_directory() {
-	return __DIR__;
+if(!function_exists('_get_woohub_plugin_directory')){
+	function _get_woohub_plugin_directory() {
+		return __DIR__;
+	}	
 }
 
 /**
  * Gets this plugin's URL.
  */
-function _get_woohub_plugin_url() {
-	static $plugin_url;
-
-	if ( empty( $plugin_url ) ) {
-		$plugin_url = plugins_url( null, __FILE__ );
-	}
-
-	return $plugin_url;
+if (!function_exists('_get_woohub_plugin_url')){
+	function _get_woohub_plugin_url() {
+		static $plugin_url;
+	
+		if ( empty( $plugin_url ) ) {
+			$plugin_url = plugins_url( null, __FILE__ );
+		}
+	
+		return $plugin_url;
+	}	
 }
 
 /**
- * Debug method. Writes to plugin log file.
- * Do not use in production
- *
+ * Get plugin base name
  */
-function _hublog( $log )
-{
-    if (is_array($log) || is_object($log)) {
-	    $log =	print_r($log, true);
-	} 
-
-    error_log($log . "\n", 3, _get_woohub_plugin_directory().'/debug.log');
+if(!function_exists('_get_woohub_basename')) {
+	function _get_woohub_basename() {
+		return plugin_basename( __FILE__ );
+	}
 }
 
 /**
@@ -72,39 +77,36 @@ WooHub::init();
 /**
  * Create or update a HubSpot contact from WP_User object
  */
-function woohub_create_or_update_hubspot_contact ( WP_User $user ) {
-    WooHub::createOrUpdateHubspot( $user );
+if(!function_exists('woohub_create_or_update_hubspot_contact')) {
+	function woohub_create_or_update_hubspot_contact ( WP_User $user ) {
+		WooHub::createOrUpdateHubspot( $user );
+	}	
 }
 
 /**
  * Update specific values for a hubspot contact
  */
-function woohub_update_hubspot_contact( $email, $properties = []) {
-	return WooHub::updateHubSpotContact($email, $properties);
+if(!function_exists('woohub_update_hubspot_contact')){
+	function woohub_update_hubspot_contact( $email, $properties = []) {
+		return WooHub::updateHubSpotContact($email, $properties);
+	}	
 }
-
-/**
- * Adds a user to a specfic contact list
- */
-function woohub_add_to_contact_list( $email, $contact_list_id ) {}
-
-/**
- * Remove a user from a specific contact list
- * Applies filter woohub_hubspot_get_contact_parameters
- */
-function woohub_remove_from_contact_list( $email, $contact_list_id ) {}
 
 /**
  * Get the current user's hubspot profile
  */
-function woohub_get_current_contact() {
-	return woohub_get_hubspot_contact(wp_get_current_user());
+if(!function_exists('woohub_get_current_contact')){
+	function woohub_get_current_contact() {
+		return woohub_get_hubspot_contact(wp_get_current_user());
+	}	
 }
 
 /**
  * Get a specific user's hubspot profile
  * Applies filter woohub_hubspot_get_contact_parameters
  */
-function woohub_get_hubspot_contact( WP_User $user ) {
-	return WooHub::getHubSpotContact($user);
+if(!function_exists('woohub_get_hubspot_contact')){
+	function woohub_get_hubspot_contact( WP_User $user ) {
+		return WooHub::getHubSpotContact($user);
+	}	
 }

@@ -2,6 +2,7 @@
 
 namespace WooHub\Admin;
 
+
 /**
  * WooHub Admin Options
  * Create admin page and handle option updates
@@ -15,9 +16,67 @@ class WooHubOptions
     {
         $instance = new WooHubOptions();
 
-        add_action('init', [$instance, 'woohub_register_settings']);
-        add_action('admin_menu', [$instance, 'woohub_admin_settings_menu']);
+        register_activation_hook( _get_woohub_basename(), [$instance, 'woohub_activation_hook'] );
 
+        add_action('init', [$instance, 'woohub_register_settings'], 10, 0);
+        add_action('admin_menu', [$instance, 'woohub_admin_settings_menu'], 10, 0);
+        add_filter('plugin_action_links_' . _get_woohub_basename(), [$instance, 'woohub_settings_link'], 10, 1);
+        add_filter('plugin_row_meta', [$instance, 'plugin_row_meta'], 10, 2);
+    }
+
+    /**
+     * Plugin Activation Hook
+     */
+    public function woohub_activation_hook()
+    {
+        register_uninstall_hook(_get_woohub_basename(), 'woohub_deactivation_hook' );
+    }
+
+    /**
+     * Plugin deactivation hook
+     */
+    public function woohub_deactivation_hook()
+    {
+        delete_option( 'woohub_hubspot_api_key' );
+        delete_site_option('woohub_hubspot_api_key');
+    }
+
+    /**
+     * Add a settings link to the plugin listing
+     */
+    public function woohub_settings_link($links)
+    {
+        // Build and escape the URL.
+        $url = esc_url(add_query_arg(
+            'page',
+            'woohub-options-page',
+            get_admin_url() . 'admin.php'
+        ));
+        // Create the link.
+        $settings_link = "<a href='$url'>" . __('Settings') . '</a>';
+        // Adds the link to the end of the array.
+        array_push(
+            $links,
+            $settings_link
+        );
+        return $links;
+    }
+
+    /**
+     * Add description links to plugin description
+     */
+    public function plugin_row_meta($links, $file)
+    {
+        if (strpos($file, 'woohub.php') !== false) {
+            $new_links = [
+                '<a href="https://github.com/kerkness/woohub" target="_blank">GitHub</a>',
+                '<a href="https://github.com/kerkness/woohub/issues" target="_blank">Support</a>',
+            ];
+
+            $links = array_merge($links, $new_links);
+        }
+
+        return $links;
     }
 
     /**
@@ -53,6 +112,8 @@ class WooHubOptions
         <div class="wrap">
             <h1><?php echo __('WooHub Settings', 'woohub') ?></h1>
 
+            <p><?php echo sprintf(__('To use this plugin you need to <a target="_blank" href="%s">create an HubSpot API key</a> and then enter the key below.', 'woohub'), 'https://knowledge.hubspot.com/integrations/how-do-i-get-my-hubspot-api-key') ?></p>
+
             <form method="post" action="options.php">
                 <?php settings_fields('woohub_settings'); ?>
                 <?php do_settings_sections('woohub_settings'); ?>
@@ -67,6 +128,8 @@ class WooHubOptions
                 <?php submit_button(); ?>
 
             </form>
+
+            <p><?php echo sprintf(__('Visit the <a target="_blank" href="%s">Github repository</a> to contribute to this plugin or submit any issues.', 'woohub'), 'https://github.com/kerkness/woohub') ?></p>
         </div>
 <?php
     }
