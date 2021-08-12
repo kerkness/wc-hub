@@ -16,6 +16,7 @@
  * Tested up to: 5.8
  * Requires PHP: 7.2
  * Author:      Kerkness
+
  * Author URI:  https://kerkness.ca
  * Text Domain: woohub
  * Domain Path: /languages
