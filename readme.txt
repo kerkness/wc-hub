@@ -1,4 +1,4 @@
-=== WCHub ===
+=== Integrator For HubSpot ===
 Contributors: Kerkness
 Tags: hubspot, crm, woocommerce, customers
 Requires at least: 5.4
@@ -8,11 +8,11 @@ Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-WCHub saves and updates HubSpot contacts when WooCommerce customers or WordPress users register, login or update their account details or addresses. 
+Integrator For HubSpot saves and updates HubSpot contacts when WooCommerce customers or WordPress users register, login or update their account details or addresses. 
 
 == Description ==
 
-WCHub saves and updates HubSpot contacts when WooCommerce customers or WordPress users register, login or update their account details or addresses. 
+Integrator For HubSpot saves and updates HubSpot contacts when WooCommerce customers or WordPress users register, login or update their account details or addresses. 
 
 Tap into all your HubSpot contact properties from your own `functions.php` file.
 

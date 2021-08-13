@@ -1,10 +1,11 @@
-# wc-hub
-Basic WooCommerce & HubSpot intergration
+# Integrator For HubSpot
+
+Basic WooCommerce/WordPress & HubSpot intergration
 
 ### Dependencies
 
 Plugin has some composer dependencies.  
-If installing from git or composer run `composer install` before activating 
+If installing from git or composer run `composer install` before activating.
 
 ### Setup
 

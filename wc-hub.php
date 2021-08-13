@@ -8,9 +8,9 @@
  * @license     GNU
  *
  * @wordpress-plugin
- * Plugin Name: WCHub, Integrate Woocommerce and HubSpot
+ * Plugin Name: Integrator For HubSpot
  * Plugin URI:  https://kerkness.ca/wc-hub
- * Description: Automatically creates and updates HubSpot records from Woocommerce
+ * Description: Automatically creates and updates HubSpot records from Woocommerce or WordPress events
  * Version:     1.0.0
  * Requires at least: 5.4
  * Tested up to: 5.8
