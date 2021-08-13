@@ -29,7 +29,7 @@ class WCHubOptions
      */
     public function wc_hub_activation_hook()
     {
-        register_uninstall_hook(_get_wc_hub_basename(), 'wc_hub_deactivation_hook' );
+        register_uninstall_hook(_get_wc_hub_basename(), [$this, 'wc_hub_deactivation_hook'] );
     }
 
     /**
