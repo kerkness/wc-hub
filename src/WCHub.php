@@ -1,16 +1,16 @@
 <?php
 
-namespace WooHub;
+namespace WCHub;
 
 use WP_User;
-use WooHub\Admin\WooHubOptions;
+use WCHub\Admin\WCHubOptions;
 use SevenShores\Hubspot\Factory as Hub;
 
 /**
- * WooHub 
+ * WCHub 
  * Handle updating contact details in HubSpot
  */
-class WooHub
+class WCHub
 {
     /**
      * Initialize Plugin 
@@ -18,7 +18,7 @@ class WooHub
     public static function init()
     {
         // If a hubspot api key has been added then register actions
-        $instance = get_option('woohub_hubspot_api_key') ? new WooHub() : null;
+        $instance = get_option('wc_hub_hubspot_api_key') ? new WCHub() : null;
 
         if ($instance) {
             add_action('user_register', [$instance, 'user_register_action'], 10, 1);
@@ -29,7 +29,7 @@ class WooHub
             add_action('woocommerce_customer_save_address', [$instance, 'action_woocommerce_customer_save_address'], 10, 2);
         }
 
-        WooHubOptions::init();
+        WCHubOptions::init();
 
         return $instance;
     }
@@ -78,7 +78,7 @@ class WooHub
      * Class method to Create or Update Hubspot User
      */
     public function createOrUpdate(WP_User $user) {
-        return WooHub::createOrUpdateHubspot($user);
+        return WCHub::createOrUpdateHubspot($user);
     }
 
     /**
@@ -87,7 +87,7 @@ class WooHub
     public static function createOrUpdateHubspot(WP_User $user)
     {
         // Create HubSpot Client
-        $hub = Hub::create(get_option('woohub_hubspot_api_key'));
+        $hub = Hub::create(get_option('wc_hub_hubspot_api_key'));
 
         // Get all the user meta data
         $meta = get_user_meta($user->ID);
@@ -104,44 +104,44 @@ class WooHub
             ],
             [
                 'property' => 'company',
-                'value' => WooHub::meta_value('billing_company', $meta)
+                'value' => WCHub::meta_value('billing_company', $meta)
             ],
             [
                 'property' => 'phone',
-                'value' => WooHub::meta_value('billing_phone', $meta)
+                'value' => WCHub::meta_value('billing_phone', $meta)
             ],
             [
                 'property' => 'address',
-                'value' => WooHub::meta_value('billing_address_1', $meta)
+                'value' => WCHub::meta_value('billing_address_1', $meta)
             ],
             [
                 'property' => 'city',
-                'value' => WooHub::meta_value('billing_city', $meta)
+                'value' => WCHub::meta_value('billing_city', $meta)
             ],
             [
                 'property' => 'state',
-                'value' => WooHub::meta_value('billing_state', $meta)
+                'value' => WCHub::meta_value('billing_state', $meta)
             ],
             [
                 'property' => 'zip',
-                'value' => WooHub::meta_value('billing_postcode', $meta)
+                'value' => WCHub::meta_value('billing_postcode', $meta)
             ],
             [
                 'property' => 'country',
-                'value' => WooHub::meta_value('billing_country', $meta)
+                'value' => WCHub::meta_value('billing_country', $meta)
             ],
 
         ];
 
         // Apply filter to properties allowing people to customize details that are pushed to hubspot
-        $properties = apply_filters( 'woohub_hubspot_contact_properties', $base_properties, $user );
+        $properties = apply_filters( 'wc_hub_hubspot_contact_properties', $base_properties, $user );
 
         // Call the HubSpot API
         $response = $hub->contacts()->createOrUpdate($user->user_email, $properties);
 
         // If Successful call action with HubSpot ID and WP_User object
         if ($response->data && $response->data->vid) {
-            do_action('woohub_hubspot_contact_updated', $response->data->vid, $user);
+            do_action('wc_hub_hubspot_contact_updated', $response->data->vid, $user);
             
             return $response->data->vid;
         }
@@ -160,11 +160,11 @@ class WooHub
         if (!$user) return false;
 
         // Create HubSpot Client
-        $hub = Hub::create(get_option('woohub_hubspot_api_key'));
+        $hub = Hub::create(get_option('wc_hub_hubspot_api_key'));
 
         $default_params = ['showListMemberships'];
 
-        $parameters = apply_filters( 'woohub_hubspot_get_contact_parameters', $default_params );
+        $parameters = apply_filters( 'wc_hub_hubspot_get_contact_parameters', $default_params );
 
         $response = $hub->contacts()->getByEmail($user->user_email, $parameters);
 
@@ -178,14 +178,14 @@ class WooHub
     public static function updateHubSpotContact($email, $properties)
     {
         // Create HubSpot Client
-        $hub = Hub::create(get_option('woohub_hubspot_api_key'));
+        $hub = Hub::create(get_option('wc_hub_hubspot_api_key'));
 
         // return $properties;
 
         $response = $hub->contacts()->updateByEmail($email, $properties);
 
         $user = get_user_by( 'email', $email );
-        do_action('woohub_hubspot_contact_updated', '', $user);
+        do_action('wc_hub_hubspot_contact_updated', '', $user);
 
         return $response;
     }

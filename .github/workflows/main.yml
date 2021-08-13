@@ -30,15 +30,15 @@ jobs:
       - name: Create artifact
         uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -X -r build/woohub.zip . -x assets** *.git* node_modules/\* .* "*/\.*" *.package* *.dist composer.* dev-helpers** build**
+          args: zip -X -r build/wc-hub.zip . -x assets** *.git* node_modules/\* .* "*/\.*" *.package* *.dist composer.* dev-helpers** build**
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-            name: WooHub Zip
-            path: build/woohub.zip
+            name: WCHub Zip
+            path: build/wc-hub.zip
       - name: Upload to release
         uses: JasonEtco/upload-to-release@master
         with:
-          args: build/woohub.zip application/zip
+          args: build/wc-hub.zip application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

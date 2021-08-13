@@ -1,5 +1,5 @@
 {
-    "name": "artmoi/woohub",
+    "name": "artmoi/wc-hub",
     "description": "Integrates WooCommerce and Hubspot.",
     "keywords": ["wordpress", "plugin", "woocommerce", "hubspot"],
     "homepage": "https://kerkness.ca",
@@ -19,7 +19,7 @@
     },
     "autoload"    : {
       "psr-4" : {
-        "WooHub\\" : "src"
+        "WCHub\\" : "src"
       }
     },
     "config": { 
