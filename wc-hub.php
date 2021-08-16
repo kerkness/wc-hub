@@ -11,7 +11,7 @@
  * Plugin Name: Integrator For HubSpot
  * Plugin URI:  https://kerkness.ca/wc-hub
  * Description: Automatically creates and updates HubSpot records from Woocommerce or WordPress events
- * Version:     1.0.0
+ * Version:     1.0.1
  * Requires at least: 5.4
  * Tested up to: 5.8
  * Requires PHP: 7.2
@@ -36,35 +36,10 @@ if (!class_exists('WCHub\WCHub')) {
 use WCHub\WCHub;
 
 /**
- * Gets this plugin's absolute directory path.
- *
- */
-if(!function_exists('_get_wc_hub_plugin_directory')){
-	function _get_wc_hub_plugin_directory() {
-		return __DIR__;
-	}	
-}
-
-/**
- * Gets this plugin's URL.
- */
-if (!function_exists('_get_wc_hub_plugin_url')){
-	function _get_wc_hub_plugin_url() {
-		static $plugin_url;
-	
-		if ( empty( $plugin_url ) ) {
-			$plugin_url = plugins_url( null, __FILE__ );
-		}
-	
-		return $plugin_url;
-	}	
-}
-
-/**
  * Get plugin base name
  */
-if(!function_exists('_get_wc_hub_basename')) {
-	function _get_wc_hub_basename() {
+if(!function_exists('wc_hub_integrator_plugin_basename')) {
+	function wc_hub_integrator_plugin_basename() {
 		return plugin_basename( __FILE__ );
 	}
 }

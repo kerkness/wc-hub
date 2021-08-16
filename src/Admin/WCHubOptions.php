@@ -16,11 +16,11 @@ class WCHubOptions
     {
         $instance = new WCHubOptions();
 
-        register_activation_hook( _get_wc_hub_basename(), [$instance, 'wc_hub_activation_hook'] );
+        register_activation_hook( wc_hub_integrator_plugin_basename(), [$instance, 'wc_hub_activation_hook'] );
 
         add_action('init', [$instance, 'wc_hub_register_settings'], 10, 0);
         add_action('admin_menu', [$instance, 'wc_hub_admin_settings_menu'], 10, 0);
-        add_filter('plugin_action_links_' . _get_wc_hub_basename(), [$instance, 'wc_hub_settings_link'], 10, 1);
+        add_filter('plugin_action_links_' . wc_hub_integrator_plugin_basename(), [$instance, 'wc_hub_settings_link'], 10, 1);
         add_filter('plugin_row_meta', [$instance, 'plugin_row_meta'], 10, 2);
     }
 
@@ -29,7 +29,7 @@ class WCHubOptions
      */
     public function wc_hub_activation_hook()
     {
-        register_uninstall_hook(_get_wc_hub_basename(), [$this, 'wc_hub_deactivation_hook'] );
+        register_uninstall_hook(wc_hub_integrator_plugin_basename(), [$this, 'wc_hub_deactivation_hook'] );
     }
 
     /**
