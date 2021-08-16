@@ -30,8 +30,7 @@ jobs:
       - name: Create artifact
         uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -X -r build/wc-hub.zip . -x lib/hubspot/hubspot-php/tests/
-lib/composer/installers/tests** lib/composer/installers/tests**  assets** *.git* node_modules/\* .* "*/\.*" *.package* *.dist composer.* dev-helpers** build**
+          args: zip -X -r build/wc-hub.zip . -x lib/hubspot/hubspot-php/tests** lib/composer/installers/tests** assets** *.git* node_modules/\* .* "*/\.*" *.package* *.dist composer.* dev-helpers** build**
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
