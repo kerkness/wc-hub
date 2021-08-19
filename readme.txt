@@ -3,7 +3,7 @@ Contributors: Kerkness
 Tags: hubspot, crm, woocommerce, customers
 Requires at least: 5.4
 Tested up to: 5.8
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -37,6 +37,9 @@ Yes. The plugin loads your complete HubSpot contact record and makes all propert
 2. Ensure your custom Contact Properties get updated automatically
 
 == Changelog ==
+
+= 1.0.4 =
+* updating stable tag
 
 = 1.0.3 =
 * cleared some notices
