@@ -195,7 +195,7 @@ class WCHub
      */
     public static function meta_value($key, $meta)
     {
-        return $meta[$key] && $meta[$key][0] ? $meta[$key][0] : '';
+        return isset($meta[$key]) && isset($meta[$key][0]) ? $meta[$key][0] : '';
     }
 
     /**

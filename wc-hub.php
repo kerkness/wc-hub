@@ -33,8 +33,6 @@ if (!class_exists('WCHub\WCHub')) {
     require_once( __DIR__ . '/lib/autoload.php');
 }
 
-use WCHub\WCHub;
-
 /**
  * Get plugin base name
  */
@@ -47,14 +45,14 @@ if(!function_exists('wc_hub_integrator_plugin_basename')) {
 /**
  * Initalize the plugin
  */
-WCHub::init();
+\WCHub\WCHub::init();
 
 /**
  * Create or update a HubSpot contact from WP_User object
  */
 if(!function_exists('wc_hub_create_or_update_hubspot_contact')) {
 	function wc_hub_create_or_update_hubspot_contact ( WP_User $user ) {
-		WCHub::createOrUpdateHubspot( $user );
+		\WCHub\WCHub::createOrUpdateHubspot( $user );
 	}	
 }
 
@@ -63,7 +61,7 @@ if(!function_exists('wc_hub_create_or_update_hubspot_contact')) {
  */
 if(!function_exists('wc_hub_update_hubspot_contact')){
 	function wc_hub_update_hubspot_contact( $email, $properties = []) {
-		return WCHub::updateHubSpotContact($email, $properties);
+		return \WCHub\WCHub::updateHubSpotContact($email, $properties);
 	}	
 }
 
@@ -82,6 +80,6 @@ if(!function_exists('wc_hub_get_current_contact')){
  */
 if(!function_exists('wc_hub_get_hubspot_contact')){
 	function wc_hub_get_hubspot_contact( WP_User $user ) {
-		return WCHub::getHubSpotContact($user);
+		return \WCHub\WCHub::getHubSpotContact($user);
 	}	
 }
