@@ -38,6 +38,9 @@ Yes. The plugin loads your complete HubSpot contact record and makes all propert
 
 == Changelog ==
 
+= 1.0.4 =
+* updating stable tag
+
 = 1.0.3 =
 * cleared some notices
 
