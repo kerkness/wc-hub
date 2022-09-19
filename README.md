@@ -60,9 +60,8 @@ add_filter( 'wc_hub_hubspot_contact_properties', 'handle_hubspot_contact_props_f
 
 function handle_hubspot_contact_props_filter( $properties, $user ) {
 
-    $properties[] = [
-        'property' => 'wordpress_username',
-        'value' => $user->user_login
+    $properties = [
+        'property_name' => 'property_value',
     ];
 
     return $properties;

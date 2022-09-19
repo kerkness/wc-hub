@@ -37,8 +37,8 @@ class WCHubOptions
      */
     public function wc_hub_deactivation_hook()
     {
-        delete_option( 'wc_hub_hubspot_api_key' );
-        delete_site_option('wc_hub_hubspot_api_key');
+        delete_option( 'wc_hub_hubspot_access_token' );
+        delete_site_option('wc_hub_hubspot_access_token');
     }
 
     /**
@@ -86,7 +86,7 @@ class WCHubOptions
     {
         register_setting(
             'wc_hub_settings',
-            'wc_hub_hubspot_api_key',
+            'wc_hub_hubspot_access_token',
             array(
                 'type'         => 'string',
                 'show_in_rest' => false,
@@ -112,15 +112,15 @@ class WCHubOptions
         <div class="wrap">
             <h1><?php echo __('WCHub Settings', 'wc-hub') ?></h1>
 
-            <p><?php echo sprintf(__('To use this plugin you need to <a target="_blank" href="%s">create an HubSpot API key</a> and then enter the key below.', 'wc-hub'), 'https://knowledge.hubspot.com/integrations/how-do-i-get-my-hubspot-api-key') ?></p>
+            <p><?php echo sprintf(__('To use this plugin you need to create a private app with permissions to read/write contacts and <a target="_blank" href="%s">copy your private app acccess-token</a> and then enter the token below.', 'wc-hub'), 'https://developers.hubspot.com/docs/api/migrate-an-api-key-integration-to-a-private-app') ?></p>
 
             <form method="post" action="options.php">
                 <?php settings_fields('wc_hub_settings'); ?>
                 <?php do_settings_sections('wc_hub_settings'); ?>
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><?php echo __('HubSpot API Key', 'wc-hub') ?></th>
-                        <td><input type="text" name="wc_hub_hubspot_api_key" value="<?php echo esc_attr(get_option('wc_hub_hubspot_api_key')); ?>" /></td>
+                        <th scope="row"><?php echo __('HubSpot App Access Token', 'wc-hub') ?></th>
+                        <td><input type="text" name="wc_hub_hubspot_access_token" value="<?php echo esc_attr(get_option('wc_hub_hubspot_access_token')); ?>" /></td>
                     </tr>
 
                 </table>

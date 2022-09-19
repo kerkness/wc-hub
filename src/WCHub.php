@@ -4,7 +4,9 @@ namespace WCHub;
 
 use WP_User;
 use WCHub\Admin\WCHubOptions;
-use SevenShores\Hubspot\Factory as Hub;
+use HubSpot\Factory as Hub;
+use HubSpot\Client\Crm\Contacts\Model\Filter as ContactFilter;
+use HubSpot\Client\Crm\Contacts\Model\SimplePublicObjectInput as ContactObject;
 
 /**
  * WCHub 
@@ -18,7 +20,7 @@ class WCHub
     public static function init()
     {
         // If a hubspot api key has been added then register actions
-        $instance = get_option('wc_hub_hubspot_api_key') ? new WCHub() : null;
+        $instance = get_option('wc_hub_hubspot_access_token') ? new WCHub() : null;
 
         if ($instance) {
             add_action('user_register', [$instance, 'user_register_action'], 10, 1);
@@ -87,57 +89,31 @@ class WCHub
     public static function createOrUpdateHubspot(WP_User $user)
     {
         // Create HubSpot Client
-        $hub = Hub::create(get_option('wc_hub_hubspot_api_key'));
+        $hub = HubSpotClientHelper::createFactory(get_option('wc_hub_hubspot_access_token'));
+        $contacts =  HubContacts::factory($hub);
 
         // Get all the user meta data
         $meta = get_user_meta($user->ID);
 
         // Build default HubSpot properties
         $base_properties = [
-            [
-                'property' => 'firstname',
-                'value' => $user->first_name
-            ],
-            [
-                'property' => 'lastname',
-                'value' => $user->last_name
-            ],
-            [
-                'property' => 'company',
-                'value' => WCHub::meta_value('billing_company', $meta)
-            ],
-            [
-                'property' => 'phone',
-                'value' => WCHub::meta_value('billing_phone', $meta)
-            ],
-            [
-                'property' => 'address',
-                'value' => WCHub::meta_value('billing_address_1', $meta)
-            ],
-            [
-                'property' => 'city',
-                'value' => WCHub::meta_value('billing_city', $meta)
-            ],
-            [
-                'property' => 'state',
-                'value' => WCHub::meta_value('billing_state', $meta)
-            ],
-            [
-                'property' => 'zip',
-                'value' => WCHub::meta_value('billing_postcode', $meta)
-            ],
-            [
-                'property' => 'country',
-                'value' => WCHub::meta_value('billing_country', $meta)
-            ],
-
+            'email' => $user->email,
+            'firstname' => $user->first_name,
+            'lastname' => $user->last_name,
+            'company' => WCHub::meta_value('billing_company', $meta),
+            'phone' => WCHub::meta_value('billing_phone', $meta),
+            'address' => WCHub::meta_value('billing_address_1', $meta),
+            'city' => WCHub::meta_value('billing_city', $meta),
+            'state' => WCHub::meta_value('billing_state', $meta),
+            'zip' => WCHub::meta_value('billing_postcode', $meta),
+            'country' => WCHub::meta_value('billing_country', $meta),
         ];
 
         // Apply filter to properties allowing people to customize details that are pushed to hubspot
         $properties = apply_filters( 'wc_hub_hubspot_contact_properties', $base_properties, $user );
 
         // Call the HubSpot API
-        $response = $hub->contacts()->createOrUpdate($user->user_email, $properties);
+        $response = $contacts->createOrUpdate($properties, 'email');
 
         // If Successful call action with HubSpot ID and WP_User object
         if ($response->data && $response->data->vid) {
@@ -160,7 +136,9 @@ class WCHub
         if (!$user) return false;
 
         // Create HubSpot Client
-        $hub = Hub::create(get_option('wc_hub_hubspot_api_key'));
+        $hub = HubSpotClientHelper::createFactory(get_option('wc_hub_hubspot_access_token'));
+        $contacts =  HubContacts::factory($hub);
+
 
         $default_params = ['showListMemberships'];
 
@@ -178,7 +156,7 @@ class WCHub
     public static function updateHubSpotContact($email, $properties)
     {
         // Create HubSpot Client
-        $hub = Hub::create(get_option('wc_hub_hubspot_api_key'));
+        $hub = Hub::create(get_option('wc_hub_hubspot_access_token'));
 
         // return $properties;
 
