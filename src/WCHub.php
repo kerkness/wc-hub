@@ -97,7 +97,7 @@ class WCHub
 
         // Build default HubSpot properties
         $base_properties = [
-            'email' => $user->email,
+            'email' => $user->user_email,
             'firstname' => $user->first_name,
             'lastname' => $user->last_name,
             'company' => WCHub::meta_value('billing_company', $meta),
@@ -114,6 +114,9 @@ class WCHub
 
         // Call the HubSpot API
         $response = $contacts->createOrUpdate($properties, 'email');
+
+        moi_debug("Create or Update response");
+        moi_debug($response);
 
         // If Successful call action with HubSpot ID and WP_User object
         if ($response->data && $response->data->vid) {
@@ -139,14 +142,28 @@ class WCHub
         $hub = HubSpotClientHelper::createFactory(get_option('wc_hub_hubspot_access_token'));
         $contacts =  HubContacts::factory($hub);
 
-
         $default_params = ['showListMemberships'];
 
         $parameters = apply_filters( 'wc_hub_hubspot_get_contact_parameters', $default_params );
 
-        $response = $hub->contacts()->getByEmail($user->user_email, $parameters);
+        moi_debug("We want to get these parameters");
+        moi_debug($parameters);
 
-        return $response;
+        //
+        $contact = $contacts->where('email', 'EQ', $user->user_email)->first();
+        $properties = $contact ? $contact->getProperties() : [];
+
+        // $response = $hub->contacts()->getByEmail($user->user_email, $parameters);
+        $user = $contacts->getById($properties['hs_object_id'], $parameters);
+
+        // Now fetch list memberships...
+
+        moi_debug("Loaded user .. did we");
+        moi_debug($user);
+
+        return [ 
+            'user' => $user,
+        ];
     }
 
     /**

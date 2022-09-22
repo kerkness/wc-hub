@@ -118,6 +118,7 @@ trait HubObject
      */
     public function createOrUpdate($params, $matching = 'hs_object_id' )
     {
+
         $object_id = false;
 
         if ( isset($params[$matching]) ){
@@ -139,7 +140,7 @@ trait HubObject
     public function search()
     {
         $this->response = $this->searchApi()
-            ->doSearch($this->search_request());
+            ->doSearch($this->search_request());    
     }
 
     public function first()
@@ -158,6 +159,12 @@ trait HubObject
     {
         $this->search();
         return $this->response ? $this->response->getResults() : null;
+    }
+
+    public function getById($id, $properties = [])
+    {
+        $object = $this->basicApi()->getById($id, [implode(',', $properties)], null, null, false);
+        return $object ? $object->getProperties() : [];
     }
 
 }
