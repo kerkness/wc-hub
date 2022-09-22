@@ -9,7 +9,7 @@ If installing from git or composer run `composer install` before activating.
 
 ### Setup
 
-Add your HubSpot API Key in `Settings > WCHub` 
+Add your HubSpot Private App Access Token in `Settings > WCHub` 
 
 ### Usage
 
@@ -24,19 +24,16 @@ To manually update a Hubspot Contact use the function `wc_hub_update_hubspot_con
 $wc_hub_contact_id = wc_hub_create_or_update_hubspot_contact( $user );
 
 // Get an existing WCHub Contact record for current user
-// @see https://developers.hubspot.com/docs/methods/contacts/get_contact_by_email
 $contact = wc_hub_get_current_contact();
 
 // Get an existing WCHub Contact from a WP_User object
-// @see https://developers.hubspot.com/docs/methods/contacts/get_contact_by_email
 $contact = wc_hub_get_hubspot_contact( $user );
 
 // Update an existing wc-hub contact
-// @see https://legacydocs.hubspot.com/docs/methods/contacts/update_contact-by-email 
 $properties = [
-    ['property' => 'firstname', 'value' => 'Sam'], 
-    ['property' => 'lastname', 'value' => 'Iam'],
-    ['property' => 'custom_property', 'value' => 'custom value']
+    ['firstname' => 'Sam'], 
+    ['lastname' => 'Iam'],
+    ['custom_property' => 'custom value']
 ]
 wc_hub_update_hubspot_contact( $current_user->user_email, $properties);
 ```
@@ -71,13 +68,12 @@ function handle_hubspot_contact_props_filter( $properties, $user ) {
 
 ```
 // Modify what HubSpot Contact Properties are returned use the `wc_hub_hubspot_get_contact_parameters` filter.
-// See https://developers.hubspot.com/docs/methods/contacts/get_contact_by_email  for more details.
 add_filter( 'wc_hub_hubspot_get_contact_parameters', 'handle_wc_hub_hubspot_get_contact_parameters', 10, 1 );
 
 function handle_wc_hub_hubspot_get_contact_parameters( $parameters ) {
-
-    $parameters = ['showListMemberships' => 1, 'property' => 'lastname'];
-
-    return $parameters;
+    return array_merge($parameters, [
+        'custom_property_key1',
+        'custom_property_key2',
+    ]);
 }
 ```
