@@ -2,7 +2,7 @@
 Contributors: Kerkness
 Tags: hubspot, crm, woocommerce, customers
 Requires at least: 5.4
-Tested up to: 6.2
+Tested up to: 6.0.2
 Stable tag: 1.1.0
 Requires PHP: 7.0
 License: GPLv2 or later

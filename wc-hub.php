@@ -13,7 +13,7 @@
  * Description: Automatically creates and updates HubSpot records from Woocommerce or WordPress events
  * Version:     1.1.0
  * Requires at least: 5.4
- * Tested up to: 6.2
+ * Tested up to: 6.0.2
  * Requires PHP: 7.2
  * Author:      Kerkness
 
