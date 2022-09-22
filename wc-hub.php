@@ -11,7 +11,7 @@
  * Plugin Name: Integrator For HubSpot
  * Plugin URI:  https://kerkness.ca/wc-hub
  * Description: Automatically creates and updates HubSpot records from Woocommerce or WordPress events
- * Version:     1.1.0
+ * Version:     1.1.1
  * Requires at least: 5.4
  * Tested up to: 6.0.2
  * Requires PHP: 7.2
