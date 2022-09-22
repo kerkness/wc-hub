@@ -15,7 +15,7 @@
     "require": {
       "php": ">=7.1.0",
       "composer/installers": "v1.0.6",
-      "hubspot/hubspot-php": "^3.1"
+        "hubspot/api-client": "^8.3"
     },
     "autoload"    : {
       "psr-4" : {
@@ -23,7 +23,9 @@
       }
     },
     "config": { 
-      "vendor-dir": "lib"
+      "vendor-dir": "lib",
+        "allow-plugins": {
+            "composer/installers": true
+        }
     }
   }
-  
