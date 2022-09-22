@@ -115,9 +115,6 @@ class WCHub
         // Call the HubSpot API
         $response = $contacts->createOrUpdate($properties, 'email');
 
-        moi_debug("Create or Update response");
-        moi_debug($response);
-
         // If Successful call action with HubSpot ID and WP_User object
         if ($response->data && $response->data->vid) {
             do_action('wc_hub_hubspot_contact_updated', $response->data->vid, $user);
@@ -146,9 +143,6 @@ class WCHub
 
         $parameters = apply_filters( 'wc_hub_hubspot_get_contact_parameters', $default_params );
 
-        moi_debug("We want to get these parameters");
-        moi_debug($parameters);
-
         //
         $contact = $contacts->where('email', 'EQ', $user->user_email)->first();
         $properties = $contact ? $contact->getProperties() : [];
@@ -157,9 +151,6 @@ class WCHub
         $user = $contacts->getById($properties['hs_object_id'], $parameters);
 
         // Now fetch list memberships...
-
-        moi_debug("Loaded user .. did we");
-        moi_debug($user);
 
         return [ 
             'user' => $user,
@@ -170,14 +161,20 @@ class WCHub
      * Update HubSpot contact with specific properties
      * @see https://legacydocs.hubspot.com/docs/methods/contacts/update_contact-by-email
      */
-    public static function updateHubSpotContact($email, $properties)
+    public static function updateHubSpotContact($email, $params)
     {
         // Create HubSpot Client
-        $hub = Hub::create(get_option('wc_hub_hubspot_access_token'));
+        $hub = HubSpotClientHelper::createFactory(get_option('wc_hub_hubspot_access_token'));
+        $contacts =  HubContacts::factory($hub);
+        
+        $contact = $contacts->where('email', 'EQ', $email)->first();
+        $properties = $contact ? $contact->getProperties() : [];
 
-        // return $properties;
+        if(!$properties['hs_object_id']) {
+            return false;
+        }
 
-        $response = $hub->contacts()->updateByEmail($email, $properties);
+        $response = $contacts->update($properties['hs_object_id'], $params);
 
         $user = get_user_by( 'email', $email );
         do_action('wc_hub_hubspot_contact_updated', '', $user);
